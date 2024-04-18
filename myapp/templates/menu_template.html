@@ -1,0 +1,31 @@
+<!-- templates/myapp/template.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Template Page</title>
+</head>
+<body>
+    <h1>This is my template page</h1>
+{% load menu_tags %}
+{% draw_menu 'main_menu' %}
+
+<form method="post">
+    {% csrf_token %}
+    <ul>
+        {% for item in menu.cached_items %}
+            <li><button type="submit" name="menu_item_id" value="{{ item.id }}" {% if item.active %}class="active"{% endif %}>{{ item.title }}</button></li>
+        {% endfor %}
+    </ul>
+</form>
+
+<ul>
+    
+    {% for item in menu.items.all %}
+        <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+    {% endfor %}
+</ul>
+
+<!-- <button type="submit">Отправить</button> -->
+</body>
+</html>
